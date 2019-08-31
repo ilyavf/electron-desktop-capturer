@@ -54,6 +54,9 @@ function printScreen () {
   window.win = win
   console.log(win)
 
+  const displays = electron.screen.getAllDisplays()
+  console.log(`displays:`, displays)
+
   const currentScreen = electron.screen.getDisplayNearestPoint({x: win.getPosition()[0], y: win.getPosition()[1]})
   window.currentScreen = currentScreen
   window.electron = electron
