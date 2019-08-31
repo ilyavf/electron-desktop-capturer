@@ -15,12 +15,8 @@ desktopCapturer.getSources({ types: ['screen'] }).then(async sources => {
             mandatory: {
               chromeMediaSource: 'desktop',
               chromeMediaSourceId: source.id,
-              minWidth: 1280,
-              maxWidth: 1280,
-              minHeight: 720,
-              maxHeight: 720
-            }
-          }
+            },
+          },
         })
         handleStream(stream)
       } catch (e) {
@@ -43,10 +39,23 @@ function handleError (e) {
   console.log(e)
 }
 
+const FINDER_WIDTH = 250
+const FINDER_DX = 490
+const FINDER_DY = 135
+
 function captureScreenshot () {
+  const win = remote.getCurrentWindow()
+  const currentScreen = electron.screen.getDisplayNearestPoint({x: win.getPosition()[0], y: win.getPosition()[1]})
+  console.log(`- current screen: currentScreen.bounds.x=${currentScreen.bounds.x}`, currentScreen)
+  const [x, y] = remote.getCurrentWindow().getPosition()
+  console.log(`- getCurrentWindow position: x=${x}, y=${y}`)
+  const sx = x + FINDER_DX // - currentScreen.bounds.x
+  const sy = y + FINDER_DY // - currentScreen.bounds.y
+
   let context = canvas.getContext('2d')
-  context.drawImage(video, 0, 0)
-  const img = context.getImageData(0, 0, 1024, 868)
+  // context.drawImage(video, 0, 0)
+  context.drawImage(video, sx, sy, FINDER_WIDTH, FINDER_WIDTH, 0, 0, FINDER_WIDTH, FINDER_WIDTH)
+  const img = context.getImageData(0, 0, FINDER_WIDTH, FINDER_WIDTH)
   console.log('img=', img)
 }
 function printScreen () {

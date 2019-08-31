@@ -7,10 +7,10 @@
 
     <script src="./captor.js"></script>
 </head>
-<body class="h-screen w-full border border-black relative" style="-webkit-app-region: drag">
+<body class="h-screen w-full border border-black relative">
 
     <div class="h-full w-1/2 bg-purple-500 text-center pt-40">
-        <p class="text-xl">
+        <p class="text-xl" style="-webkit-app-region: drag">
             Scan QR Code
         </p>
         <p class="mt-10">
@@ -26,7 +26,7 @@
         </p>
 
         <video ref="video" style="display:none"></video>
-        <canvas ref="canvas"></canvas>
+        <canvas ref="canvas" width="250" height="250"></canvas>
 
         <p class="text-center mt-10">
             <img id="my-preview" class="h-24 ml-32 mt-8" src="" />
