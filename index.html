@@ -13,12 +13,18 @@
         <p class="text-xl" style="-webkit-app-region: drag">
             Scan QR Code
         </p>
+        <p class="">
+            x = <span id="coorX"></span>, y = <span id="coorY"></span>
+        </p>
         <p class="mt-10">
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="captureScreenshot()">
                 Capture
             </button>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="printScreen()">
-                Screen
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="printCoor()">
+                Coor
+            </button>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="captureFullScreen()">
+                Full Screen
             </button>
         </p>
         <p class="mt-10">
@@ -33,7 +39,7 @@
         </p>
     </div>
     <div class="absolute bottom-0 right-0 w-1/2 h-12 bg-gray-500 text-center pt-2">Drag this window over your QR code</div>
-    <div class="absolute right-0 top-0 mt-32 mr-16 w-64 h-64 border-4 border-blue-700">
+    <div class="absolute w-64 h-64 border-4 border-blue-700" style="top: 100px; left: 400px">
         <div class="absolute left-0 top-0 w-16 h-16 border-8 border-b-0 border-r-0 border-red-700"></div>
         <div class="absolute left-0 bottom-0 w-16 h-16 border-8 border-t-0 border-r-0 border-red-700"></div>
         <div class="absolute right-0 top-0 w-16 h-16 border-8 border-b-0 border-l-0 border-red-700"></div>

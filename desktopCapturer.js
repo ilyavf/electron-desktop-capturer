@@ -15,6 +15,10 @@ desktopCapturer.getSources({ types: ['screen'] }).then(async sources => {
             mandatory: {
               chromeMediaSource: 'desktop',
               chromeMediaSourceId: source.id,
+              minWidth: 3040,
+              minHeight: 1200,
+              maxWidth: 3040,
+              maxHeight: 1200
             },
           },
         })
@@ -29,6 +33,7 @@ desktopCapturer.getSources({ types: ['screen'] }).then(async sources => {
 
 const video = document.querySelector('video')
 const canvas = document.querySelector('canvas')
+const context = canvas.getContext('2d')
 
 function handleStream (stream) {
   video.srcObject = stream
@@ -40,8 +45,8 @@ function handleError (e) {
 }
 
 const FINDER_WIDTH = 250
-const FINDER_DX = 490
-const FINDER_DY = 135
+const FINDER_DX = 400
+const FINDER_DY = 100
 
 function captureScreenshot () {
   const win = remote.getCurrentWindow()
@@ -52,11 +57,16 @@ function captureScreenshot () {
   const sx = x + FINDER_DX // - currentScreen.bounds.x
   const sy = y + FINDER_DY // - currentScreen.bounds.y
 
-  let context = canvas.getContext('2d')
   // context.drawImage(video, 0, 0)
   context.drawImage(video, sx, sy, FINDER_WIDTH, FINDER_WIDTH, 0, 0, FINDER_WIDTH, FINDER_WIDTH)
   const img = context.getImageData(0, 0, FINDER_WIDTH, FINDER_WIDTH)
   console.log('img=', img)
+}
+function printCoor () {
+  const win = remote.getCurrentWindow()
+  const coor = {x: win.getPosition()[0], y: win.getPosition()[1]}
+  showCoor(coor)
+  captureSquareXY(coor)
 }
 function printScreen () {
   const win = remote.getCurrentWindow()
@@ -71,3 +81,21 @@ function printScreen () {
   window.electron = electron
   console.log(`currentScreen.id = ${currentScreen.id}`)
 }
+function captureFullScreen () {
+  context.drawImage(video, 0, 0, 250, 250)
+}
+function captureSquareXY ({x, y}) {
+  context.drawImage(video, x, y, 250, 250, 0, 0, 250, 250)
+}
+
+const elX = document.getElementById('coorX')
+const elY = document.getElementById('coorY')
+let x, y
+function showCoor (coor) {
+  elX.innerHTML = coor.x
+  elY.innerHTML = coor.y
+  x = coor.x
+  y = coor.y
+}
+
+printScreen()
